@@ -1,0 +1,94 @@
+import java.util.*;
+import javax.swing.*; 
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import java.awt.*;
+import java.awt.event.*; 
+
+public class MagicSquare1 extends JFrame {
+
+   
+    JPanel q;
+    JButton jt[];
+    MagicSquare1(int n) {
+    	
+                int i,j;
+                int[][] a=new int[n][n];
+                for (i = 0; i < n; i++) {
+                    for (j = 0; j < n; j++) {
+                        a[i][j] = 0;
+                    }
+                }
+		
+                i = 0;
+                j = n / 2;
+                a[i][j] = 1;
+                if (n % 2 == 0) {
+                     System.out.print("enter an odd order matrix");
+                      }
+                 else {
+                    int r = 0, c = 0;
+                    for (int k = 2; k <= n * n; k++) {
+                        if (i == 0 && j == 0) {
+                            r = i + 1;
+                            c = j;
+                        } else if (i == 0) {
+                            r = n - 1;
+                            c = j - 1;
+                        } else if (j == 0) {
+                            r = i - 1;
+                            c = n - 1;
+                        } else {
+                            r = i - 1;
+                            c = j - 1;
+                        }
+                        if (a[r][c] > 0) {
+                            r = i + 1;
+                            c = j;
+                        }
+                        i = r;
+                        j = c;
+                        a[i][j] = k;
+                    }
+                }
+                int k, l,g=0;
+
+		jt=new JButton[n*n];
+		while(g!=n*n)
+      {         
+       for (k = 0; k < n; k++)
+      {
+        for (l = 0; l < n; l++) 
+      {
+       int temp = a[k][l];
+       String st = Integer.toString(temp);
+       jt[g]=new JButton(st);
+			g++;
+       }
+       }
+       }
+  	   Font f=new Font("Arial",Font.BOLD,48);
+	   q=new JPanel ();
+      GridLayout gl =new GridLayout(n,n);
+      q.setLayout(gl);
+	for(g=0;g<n*n;g++)
+	{
+	jt[g].setFont(f);
+	q.add(jt[g]);
+	}
+	this.add(q);
+	this.pack();
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setSize(1000,1000);
+    this.setVisible(true);
+    }
+    public static void main(String[] args) 
+  {
+	System.out.print("Enter the size of magic square:");
+	Scanner obj=new Scanner(System.in);
+	int n=obj.nextInt();
+   int sum=(n*n*n+n)/2;
+        new MagicSquare1(n);
+   System.out.println("sum:"+sum);   
+  }
+ }
